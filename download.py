@@ -11,6 +11,7 @@ def master(input_file,temp_dir,output_dir,finished_list):
 	# generate list of runs to download
 	run_list = make_run_list(input_file)
 	run_list = [(run_name,data_type) for run_name,data_type in run_list if run_name not in finished_list]
+	print(f'Downloading {len(run_list)} assemblies')
 	# this removes any runs that were already processed
 	for run_name,data_type in run_list:
 		if data_type == 'run':
@@ -85,9 +86,11 @@ def make_finished_list(dirlist):
 def check_run_list(raw_data_dir):
 	finished_list = set()
 	for filename in os.listdir(raw_data_dir):
+		# for fastq files
 		if '.fastq.gz' in filename:
 			filename2 = re.split('_R[1,2].fastq.gz',filename)[0]
 			finished_list.add(filename2)
+		# for assemblies
 		elif os.path.isdir(raw_data_dir + filename):
 			finished_list.add(filename)
 	return(finished_list)
@@ -121,6 +124,7 @@ def main():
 		if p is not None and not os.path.isdir(p):
 			subprocess.run(['mkdir','-p',p])
 	finished_name_list = make_finished_list(args.finished_directory_list)
+	print(f'Skipping {len(finished_name_list)} previously downloaded accession numbers')
 	master(input_file=args.input,temp_dir=args.temp,output_dir=args.output_dir,finished_list = finished_name_list)
 
 if __name__ == "__main__":
