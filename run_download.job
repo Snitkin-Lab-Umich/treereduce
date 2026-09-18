@@ -7,11 +7,23 @@
 #SBATCH --account=esnitkin1
 #SBATCH --nodes=1
 #SBATCH --cpus-per-task=1
-#SBATCH --mem=5g
-#SBATCH --time=48:00:00
+#SBATCH --mem=10g
+#SBATCH --time=24:00:00
+
+source ~/miniconda3/etc/profile.d/conda.sh
+conda activate ncbi_datasets
 
 module load Bioinformatics sratoolkit/3.1.1
-#conda activate ncbi_datasets
-python3 download.py --input /nfs/turbo/umms-esnitkin/Project_Cauris/Analysis/2024_Pipeline_testing/2026-04-07_mdhhs_added_samples/mdhhs_accessions_ToDownload_2025-08-06.csv \
---temp /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_040726/temp/ \
---output_dir /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_040726/raw_reads/
+
+#python3 download.py --input /nfs/turbo/umms-esnitkin/Project_Cauris/Analysis/2024_Pipeline_testing/2026-04-07_mdhhs_added_samples/mdhhs_accessions_ToDownload_2025-08-06.csv \
+#--temp /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_040726/temp/ \
+#--output_dir /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_040726/raw_reads/ \
+#--finished_directory_list /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_040726/raw_reads\
+
+python3.12 download.py --input /nfs/turbo/umms-esnitkin/Project_Cauris/Analysis/2024_Pipeline_testing/2026-04-07_mdhhs_added_samples/treereduce/mdhhs_accessions_ToDownload_2026-09-17.tsv \
+--temp /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_091726/temp/ \
+--output_dir /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_091726/raw_reads/ \
+--finished_directory_list /scratch/esnitkin_root/esnitkin0/jjhale/mdhhs_added_samples_091726/raw_reads/
+
+
+
